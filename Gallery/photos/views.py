@@ -13,14 +13,14 @@ def photo_list():
 
 
 class PhotoListView(TemplateView):
-    template_name = 'photos.html'
+    template_name = 'heroes.html'
 
     def get_context_data(self, **kwargs):
         return dict(photos=photo_list())
 
 
 class PhotoDetailView(TemplateView):
-    template_name = 'photo.html'
+    template_name = 'hero.html'
 
     def get_context_data(self, **kwargs):
         i = kwargs['id']

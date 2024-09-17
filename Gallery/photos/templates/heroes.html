@@ -1,0 +1,15 @@
+{% extends 'theme.html' %}
+
+
+
+{% block content %}
+
+{% for photo in photos %}
+
+<a href="/hero/{{ photo.id }}">
+    <img class="hero" src="/{{ photo.file }}" alt="Hero {{ photo.id }}" width="300">
+</a>
+
+{% endfor %}
+
+{% endblock content %}
