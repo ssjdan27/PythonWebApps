@@ -1,15 +1,7 @@
-from django.views.generic import RedirectView
 from django.urls import path
-
-from photos.views import PhotoDetailView, PhotoListView
-
+from photos.views import HeroListView, HeroDetailView
 
 urlpatterns = [
-
-    # Home
-    path('', RedirectView.as_view(url='hero/')),
-
-    # Photos
-    path('hero/', PhotoListView.as_view()),
-    path('hero/<int:id>', PhotoDetailView.as_view()),
+    path('', HeroListView.as_view(), name='hero-list'),  # For the hero list (index page)
+    path('hero/<str:hero_id>/', HeroDetailView.as_view(), name='hero-detail'),  # For hero detail pages
 ]

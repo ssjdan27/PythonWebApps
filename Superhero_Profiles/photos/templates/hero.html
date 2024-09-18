@@ -1,25 +1,11 @@
-{% extends 'theme.html' %}
-
-
+{% extends 'superhero_theme.html' %}
+{% load static %}  <!-- Add this line to load the static tag -->
 
 {% block content %}
-<!-- need this to display information about the superhero like name, image, strength, weaknesses-->
-<h3>Hero Detail</h3>
-<p>
-    <img class="hero" src="/{{ photo.file }}" alt="Hero {{ photo.id }}">
-</p>
-<p>
-    CAPTION:
-    {% if photo.caption %}
-    {{ photo.caption }} 
-    {% else %}
-    No caption
-    {% endif%}
-
-</p>
-<p>
-    FILE PATH: {{ photo.file }}
-</p>
-
-
-{% endblock content %}
+    <h1>{{ hero.name }}</h1>
+    <img src="{% static 'images/' %}{{ photo.file }}" alt="{{ hero.name }}">
+    <p><strong>Strengths:</strong> {{ hero.strengths }}</p>
+    <p><strong>Weaknesses:</strong> {{ hero.weaknesses }}</p>
+    <p><strong>Photo:</strong> {{ photo.caption }}</p>
+    <a href="{% url 'hero-list' %}">Back to list</a>
+{% endblock %}
