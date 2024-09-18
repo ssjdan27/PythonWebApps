@@ -1,5 +1,5 @@
 from django.urls import path
-from photos.views import HeroListView, HeroDetailView
+from heroes.views import HeroListView, HeroDetailView
 
 urlpatterns = [
     path('', HeroListView.as_view(), name='hero-list'),  # For the hero list (index page)
