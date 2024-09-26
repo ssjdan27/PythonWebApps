@@ -1,0 +1,11 @@
+<!-- hero/templates/hero.html -->
+
+{% extends 'superhero_theme.html' %}
+{% load static %}
+
+{% block content %}
+<h1>{{ hero.name }}</h1>
+<img src="{% static 'images/' %}{{ hero.image }}" alt="{{ hero.name }}" class="img-fluid mb-3">
+<p>{{ hero.description }}</p>
+<a href="{% url 'hero-list' %}" class="btn btn-primary">Back to List</a>
+{% endblock %}

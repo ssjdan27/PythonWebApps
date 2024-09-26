@@ -1,8 +1,0 @@
-{% extends 'superhero_theme.html' %}
-
-{% block content %}
-<h1>{{ hero.name }}</h1>
-<img src="{{ hero.image }}" alt="{{ hero.name }}">
-<p>{{ hero.description }}</p>
-<a href="{% url 'hero_list' %}">Back to list</a>
-{% endblock %}
