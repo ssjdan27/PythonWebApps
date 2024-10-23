@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 def index(request):
     return render(request, 'hero/index.html')
 
-class SuperheroListView(LoginRequiredMixin, ListView):
+class SuperheroListView(ListView):
     model = Superhero
     template_name = 'hero/superhero_list.html'
     context_object_name = 'superheroes'
