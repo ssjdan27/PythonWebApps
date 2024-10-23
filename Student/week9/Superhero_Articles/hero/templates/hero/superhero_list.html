@@ -1,0 +1,19 @@
+{% extends 'hero/superhero_theme.html' %}
+
+{% block content %}
+<h2 class="mt-4">Superhero List</h2>
+<a href="{% url 'superhero_add' %}" class="btn btn-success mb-3">Add New Superhero</a>
+<ul class="list-group">
+    {% for superhero in superheroes %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="{% url 'superhero_detail' superhero.pk %}">{{ superhero.name }}</a>
+            <div>
+                {% if superhero.author == request.user %}
+                    <a href="{% url 'superhero_edit' superhero.pk %}" class="btn btn-sm btn-primary">Edit</a>
+                    <a href="{% url 'superhero_delete' superhero.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                {% endif %}
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
