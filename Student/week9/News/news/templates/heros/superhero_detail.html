@@ -1,0 +1,15 @@
+{% extends 'theme.html' %}
+{% block title %}{{ object.name }}{% endblock title %}
+{% load static %}
+{% block content %}
+<img src="{% static 'images/' %}{{ object.image }}" alt="{{ object.name }}" class="img-fluid mb-3 rounded" style="width: 200px; height: auto;">
+<p><strong>Identity:</strong> {{ object.identity }}</p>
+<p><strong>Strength:</strong> {{ object.strength }}</p>
+<p><strong>Weakness:</strong> {{ object.weakness }}</p>
+<p><strong>Description:</strong> {{ object.description }}</p>
+{% if object.author == request.user %}
+<a href="{% url 'superhero_edit' object.pk %}" class="btn btn-warning">Edit</a>
+<a href="{% url 'superhero_delete' object.pk %}" class="btn btn-danger">Delete</a>
+{% endif %}
+<a href="{% url 'superhero_list' %}" class="btn btn-secondary">Back to List</a>
+{% endblock %}
