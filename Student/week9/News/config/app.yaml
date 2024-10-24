@@ -1,17 +1,21 @@
 alerts:
 - rule: DEPLOYMENT_FAILED
 - rule: DOMAIN_FAILED
+envs:
+- key: DISABLE_COLLECTSTATIC
+  scope: RUN_AND_BUILD_TIME
+  value: "1"
 features:
 - buildpack-stack=ubuntu-22
 ingress:
   rules:
   - component:
-      name: pythonwebapps-student-week9-news
+      name: pythonwebapps-student-week-9-new
     match:
       path:
         prefix: /
   - component:
-      name: pythonwebapps-student-week9-news
+      name: pythonwebapps-student-week-9-ne2
     match:
       path:
         prefix: /static
@@ -19,10 +23,6 @@ name: coral-app
 region: nyc
 services:
 - environment_slug: python
-  envs:
-  - key: DISABLE_COLLECTSTATIC
-    scope: RUN_AND_BUILD_TIME
-    value: "1"
   github:
     branch: main
     deploy_on_push: true
@@ -30,7 +30,7 @@ services:
   http_port: 8080
   instance_count: 1
   instance_size_slug: apps-s-1vcpu-0.5gb
-  name: pythonwebapps-week9-news
+  name: pythonwebapps-student-week-9-new
   run_command: gunicorn --worker-tmp-dir /dev/shm config.wsgi
   source_dir: Student/week9/News
 static_sites:
@@ -39,5 +39,5 @@ static_sites:
     branch: main
     deploy_on_push: true
     repo: ssjdan27/PythonWebApps
-  name: pythonwebapps-student-week9-news
+  name: pythonwebapps-student-week-9-ne2
   source_dir: Student/week9/News/static
