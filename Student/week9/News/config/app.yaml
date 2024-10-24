@@ -1,49 +1,43 @@
-envs:
-- key: DEBUG
-  scope: RUN_AND_BUILD_TIME
-  value: "True"
-- key: DISABLE_COLLECTSTATIC
-  scope: RUN_AND_BUILD_TIME
-  value: "1"
-- key: DJANGO_ALLOWED_HOST
-  scope: RUN_AND_BUILD_TIME
-  value: .ondigitalocean.app
-- key: DEVELOPMENT_MODE
-  scope: RUN_AND_BUILD_TIME
-  value: "True"
-- key: DJANGO_SUPERUSER_USERNAME
-  scope: RUN_AND_BUILD_TIME
-  value: seaman
-- key: DJANGO_SUPERUSER_PASSWORD
-  scope: RUN_AND_BUILD_TIME
-  type: SECRET
-  value: EV[1:ucisUj/NUMdTmPvKpBVKPDFyZD2IFX3Z:QlHsGQPQdufHcWtqY9oMclJXiJZTIw==]
-name: webapps-demo
+alerts:
+- rule: DEPLOYMENT_FAILED
+- rule: DOMAIN_FAILED
+features:
+- buildpack-stack=ubuntu-22
+ingress:
+  rules:
+  - component:
+      name: pythonwebapps-student-week9-news
+    match:
+      path:
+        prefix: /
+  - component:
+      name: pythonwebapps-student-week9-news
+    match:
+      path:
+        prefix: /static
+name: coral-app
 region: nyc
 services:
 - environment_slug: python
+  envs:
+  - key: DISABLE_COLLECTSTATIC
+    scope: RUN_AND_BUILD_TIME
+    value: "1"
   github:
     branch: main
     deploy_on_push: true
-    repo: Mark-Seaman/PythonWebApps
+    repo: ssjdan27/PythonWebApps
   http_port: 8080
   instance_count: 1
-  instance_size_slug: basic-xxs
-  name: webapps-demo-app
-  routes:
-  - path: /
-  run_command: |
-    python manage.py migrate --no-input
-    python manage.py loaddata config/data.json
-    gunicorn --worker-tmp-dir /dev/shm config.wsgi
-  source_dir: 07/News
+  instance_size_slug: apps-s-1vcpu-0.5gb
+  name: pythonwebapps-week9-news
+  run_command: gunicorn --worker-tmp-dir /dev/shm config.wsgi
+  source_dir: Student/week9/News
 static_sites:
 - environment_slug: html
   github:
     branch: main
     deploy_on_push: true
-    repo: Mark-Seaman/PythonWebApps
-  name: webapps-demo-static
-  routes:
-  - path: /static
-  source_dir: 07/News/static
+    repo: ssjdan27/PythonWebApps
+  name: pythonwebapps-student-week9-news
+  source_dir: Student/week9/News/static
