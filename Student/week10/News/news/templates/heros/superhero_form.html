@@ -1,0 +1,12 @@
+{% extends 'theme.html' %}
+{% block title %}{% if object %}Edit{% else %}Add{% endif %} Superhero{% endblock title %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-secondary">Save</button>
+    <a href="{% url 'superhero_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

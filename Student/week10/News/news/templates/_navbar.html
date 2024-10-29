@@ -1,0 +1,33 @@
+<li class="nav-item">
+    <a class="nav-link text-light" href="{% url 'superhero_list' %}">Superheroes</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link text-light" href="{% url 'article_list' %}">News Articles</a>
+</li>
+
+{% if user.is_authenticated %}
+<li class="nav-item">
+    <a class="nav-link text-light" href="{% url 'article_add' %}">Write Article</a>
+</li>
+<li class="nav-item"></li>
+    <a class="nav-link text-light" href="#">Hello {{ user.username }}</a>
+</li>
+<li class="nav-item">
+    <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: none;">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+    <a class="nav-link text-light" href="#" onclick="document.getElementById('logout-form').submit();">Log out</a>
+</li>
+
+{% else %}
+
+<li class="nav-item">
+    <a class="nav-link  text-light " href="{% url 'login' %}">Log In</a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link  text-light " href="{% url 'author_add' %}">Sign Up</a>
+</li>
+
+{% endif %}
