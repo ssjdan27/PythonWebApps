@@ -61,7 +61,6 @@
                                         <a href="{% url 'superhero_detail' superhero.pk %}">{{ superhero.name }}</a>
                                     </div>
                                     <div>
-                                        <a href="{% url 'author_detail' superhero.author.pk %}">{{ superhero.author }}</a>
                                         {% if superhero.author == request.user or request.user.is_superuser %}
                                             <a href="{% url 'superhero_edit' superhero.pk %}" class="btn btn-sm btn-primary">Edit</a>
                                             <a href="{% url 'superhero_delete' superhero.pk %}" class="btn btn-sm btn-danger">Delete</a>
