@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, RedirectView, UpdateView
 
-from .models import Article, Author
+from .models import Article, Author, Superhero
 
 
 def list_articles(author):
@@ -36,9 +36,11 @@ class AuthorDetailView(DetailView):
     model = Author
 
     def get_context_data(self, **kwargs):
-        kwargs = super().get_context_data(**kwargs)
-        kwargs.update(list_articles(kwargs.get('object')))
-        return kwargs
+        context = super().get_context_data(**kwargs)
+        author = self.get_object()
+        context['articles'] = Article.objects.filter(author=author)
+        context['superheroes'] = Superhero.objects.filter(author=author.user)
+        return context
 
 class AuthorAddView(CreateView):
     form_class = UserCreationForm
