@@ -7,6 +7,7 @@ from .views_author import UserUpdateView, AuthorAddView
 from .views_author import AuthorDetailView, AuthorHomeView, AuthorListView, AuthorUpdateView, AuthorDeleteView
 from .views_article import ArticleDeleteView, ArticleDetailView, ArticleListView, ArticleCreateView, ArticleUpdateView
 from .views_hero import SuperheroListView, SuperheroCreateView, SuperheroDetailView, SuperheroUpdateView, SuperheroDeleteView
+from .views_investigator import InvestigatorDetailView, InvestigatorUpdateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,4 +31,6 @@ urlpatterns = [
     path('hero/<int:pk>/',          SuperheroDetailView.as_view(), name='superhero_detail'),
     path('hero/<int:pk>/edit/',     SuperheroUpdateView.as_view(), name='superhero_edit'),
     path('hero/<int:pk>/delete/',   SuperheroDeleteView.as_view(), name='superhero_delete'),
+    path('investigator/<int:pk>/', InvestigatorDetailView.as_view(), name='investigator_detail'),
+    path('investigator/edit/', InvestigatorUpdateView.as_view(), name='investigator_edit'),
 ]

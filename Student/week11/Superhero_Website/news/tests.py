@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
-from .models import Article, Author
+from .models import Article, Author, Investigator
 
 
 def user_args():
@@ -236,3 +236,13 @@ class AuthorViewsTest(TestCase):
         self.assertEqual(reverse('author_delete', args='1'), '/author/1/delete')
         response = self.client.post('/author/1/delete')
         self.assertEqual(len(Author.objects.all()), 0)
+
+class InvestigatorModelTest(TestCase):
+    def setUp(self):
+        self.user = test_user()
+        self.investigator = Investigator.objects.create(user=self.user, name='Sherlock Holmes')
+
+    def test_investigator_creation(self):
+        investigator = Investigator.objects.create(user=self.user, name='John Doe')
+        self.assertEqual(investigator.user.username, 'John Doe')
+        self.assertEqual(investigator.name, 'John Doe')
