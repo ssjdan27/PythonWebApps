@@ -1,0 +1,20 @@
+{% extends 'theme.html' %}
+
+
+
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="container m-5">
+
+    <h1>Add New Author</h1>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+
+        <button class="btn btn-primary mt-5" type="submit">Save Record</button>
+    </form>
+
+</div>
+
+{% endblock content %}

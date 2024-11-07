@@ -1,0 +1,55 @@
+{% extends 'theme.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Author Details</h1>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <p><strong>Author Name:</strong> {{ object.user.first_name }} {{ object.user.last_name }}</p>
+                    <p><strong>Author Email:</strong> {{ object.user.email }}</p>
+                    <p><strong>User ID:</strong> {{ object.user.username }}</p>
+                    <p><strong>Biography:</strong> {{ object.bio }}</p>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <a href="/author/" class="btn btn-secondary">Author List</a>
+                {% if request.user == object.user or request.user.is_superuser %}
+                    <a href="/author/{{ object.pk }}/" class="btn btn-primary">Edit Author</a>
+                    <a href="/author/{{ object.pk }}/delete" class="btn btn-danger">Delete Author</a>
+                {% endif %}
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2>List of Articles</h2>
+                    <ul class="list-group list-group-flush">
+                        {% for article in articles %}
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <a href="/article/{{ article.pk }}">{{ article.title }}</a> by 
+                                        <a href="/author/{{ article.author.pk }}">{{ article.author.user.username }}</a>
+                                    </div>
+                                    {% if request.user == article.author.user or request.user.is_superuser %}
+                                        <div>
+                                            <a href="/article/{{ article.pk }}/edit" class="btn btn-sm btn-primary">Edit</a>
+                                            <a href="/article/{{ article.pk }}/delete" class="btn btn-sm btn-danger">Delete</a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    {% if request.user.is_authenticated %}
+                        <a href="/article/add" class="btn btn-secondary mt-3">Add New Article</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
