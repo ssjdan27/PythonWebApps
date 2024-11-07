@@ -1,0 +1,21 @@
+{% extends 'theme.html' %}
+
+{% block title %}List of Articles{% endblock title %}
+
+{% block content %}
+<a href="{% url 'article_add' %}" class="btn btn-secondary mb-3">Add New Article</a>
+<ul class="list-group">
+    {% for article in object_list %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="{% url 'article_detail' article.pk %}">{{ article.title }}</a>
+            <div>
+                <a href="{% url 'investigator_detail' article.investigator.pk %}">{{ article.investigator.user.username }}</a>
+                {% if article.investigator.user == request.user %}
+                    <a href="{% url 'article_edit' article.pk %}" class="btn btn-sm btn-primary">Edit</a>
+                    <a href="{% url 'article_delete' article.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                {% endif %}
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock content %}

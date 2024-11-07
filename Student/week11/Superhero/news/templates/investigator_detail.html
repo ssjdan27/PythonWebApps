@@ -1,0 +1,59 @@
+{% extends 'theme.html' %}
+
+{% block content %}
+
+<div class="container m-5">
+
+    <h1>Investigator Details</h1>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg">
+
+                <div>
+                    <p><b>Investigator Name:</b> {{ object.user.first_name }} {{ object.user.last_name }}</p>
+                    <p><b>Investigator Email:</b> {{ object.user.email }}</p>
+                    <p><b>User ID:</b> {{ object.user.username }}</p>
+                    <p><b>Biography:</b> {{ object.bio }}</p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <a href="/investigator/" class="btn btn-secondary m-5">Investigator List</a>
+    {% if request.user == object.user or request.user.is_superuser %}
+        <a href="/investigator/{{ object.pk }}/" class="btn btn-secondary m-5">Edit Investigator</a>
+        <a href="/investigator/{{ object.pk }}/delete" class="btn btn-secondary m-5">Delete Investigator</a>
+    {% endif %}
+
+    <div class="card m-5 p-5">
+
+        <h2>List of Articles</h2>
+
+        <div>
+            {% for article in articles %}
+                <div class="article-item">
+                    <p><a href="/article/{{ article.pk }}">{{ article.title }}</a> by <a href="/investigator/{{ article.investigator.pk }}">{{ article.investigator.user.username }}</a></p>
+                    {% if request.user == article.investigator.user or request.user.is_superuser %}
+                        <p>
+                            <a href="/article/{{ article.pk }}/">Edit</a> /
+                            <a href="/article/{{ article.pk }}/delete">Delete</a>
+                        </p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if request.user.is_authenticated %}
+            <p>
+                <a href="/article/add" class="btn btn-secondary m-5">Add New Article</a>
+            </p>
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock content %}

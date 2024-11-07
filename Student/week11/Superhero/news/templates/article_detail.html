@@ -1,0 +1,25 @@
+{% extends 'theme.html' %}
+
+{% block content %}
+
+<div class="container m-5">
+    <header class="text-center">
+        <h1>{{ object.title }}</h1>
+    </header>
+
+    <div class="card">
+        <div class="card-body">
+
+            <h6 class="card-subtitle mb-2 text-muted">By <a href="/investigator/{{ object.investigator.pk }}">{{ object.investigator.user.username }}</a></h6>
+            <p class="card-text">{{ object.body }}</p>
+            <a href="/article/" class="btn btn-secondary m-2">Article List</a>
+            {% if object.investigator.user == request.user %}
+                <a href="/article/{{ object.pk }}/" class="btn btn-secondary m-2">Edit Article</a>
+                <a href="/article/{{ object.pk }}/delete" class="btn btn-secondary m-2">Delete Article</a>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}
