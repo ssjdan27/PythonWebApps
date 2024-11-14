@@ -49,7 +49,7 @@ services:
     python manage.py createsuperuser --noinput
     python manage.py migrate --no-input
     gunicorn --worker-tmp-dir /dev/shm config.wsgi
-  source_dir: Student/week11/Superhero
+  source_dir: Student/week12/Superhero
 static_sites:
 - environment_slug: html
   github:
@@ -57,4 +57,4 @@ static_sites:
     deploy_on_push: true
     repo: ssjdan27/PythonWebApps
   name: pythonwebapps-student-week-9-ne2
-  source_dir: Student/week11/Superhero/static
+  source_dir: Student/week12/Superhero/static
