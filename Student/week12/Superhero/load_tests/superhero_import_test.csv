@@ -1,2 +1,6 @@
 id,name,identity,description,strength,weakness,image,investigator_id
 1,Garfield,Garfield,is garf,Cat,Lazy,garfield.jpg,1
+2,Spiderman,Peter Parker,Spiderman,Spiderman,Green Goblin,spiderman.jpg,1
+3,Batman,Bruce Wayne,Batman,Batman,Joker,batman.jpg,1
+4,Superman,Clark Kent,Superman,Superman,Kryptonite,superman.jpg,1
+5, Saitama, One Punch Man, Saitama, One, None, saitama.jpg, 1

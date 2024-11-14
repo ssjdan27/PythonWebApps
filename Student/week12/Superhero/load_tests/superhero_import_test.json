@@ -8,5 +8,25 @@
         "weakness": "Lazy",
         "image": "garfield.jpg",
         "investigator_id": 1
+    },
+    {
+        "id": 2,
+        "name": "Batman",
+        "identity": "Bruce Wayne",
+        "description": "is bat",
+        "strength": "Rich",
+        "weakness": "Parents",
+        "image": "batman.jpg",
+        "investigator_id": 1
+    },
+    {
+        "id": 3,
+        "name": "Superman",
+        "identity": "Clark Kent",
+        "description": "is super",
+        "strength": "Alien",
+        "weakness": "Kryptonite",
+        "image": "superman.jpg",
+        "investigator_id": 1
     }
 ]
