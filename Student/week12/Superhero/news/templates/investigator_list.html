@@ -1,0 +1,31 @@
+{% extends 'theme.html' %}
+
+{% block content %}
+<div class="container-fluid m-5">
+
+    <h1 class="text-center">List of Investigators</h1>
+
+    <div class="row">
+        {% for investigator in object_list %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="/investigator/{{ investigator.pk }}">{{ investigator.name }}</a>
+                    </h4>
+                    <p class="card-text">{{ investigator.bio }}</p>
+                    {% if user.is_authenticated and user == investigator.user or user.is_superuser %}
+                    <p>
+                        <a href="/investigator/{{ investigator.pk }}/" class="btn btn-primary btn-sm">Edit</a>
+                        <a href="/investigator/{{ investigator.pk }}/delete" class="btn btn-danger btn-sm">Delete</a>
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock content %}
