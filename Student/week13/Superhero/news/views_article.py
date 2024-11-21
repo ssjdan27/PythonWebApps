@@ -2,6 +2,8 @@ import markdown
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django import forms
+from django.forms.models import inlineformset_factory
 from django.views.generic import (
     CreateView,
     DeleteView,
@@ -16,6 +18,19 @@ from .models import Article
 from .views_investigator import get_investigator
 from .models import Photo
 
+# Inline Formset for associating photos with articles
+PhotoFormSet = inlineformset_factory(
+    Article, Photo, 
+    fields=('title', 'image'), 
+    extra=3,  # Allow up to 3 photos to be uploaded initially
+    can_delete=True
+)
+
+# Optional: Define a base form for articles if needed
+class ArticleForm(forms.ModelForm):
+    class Meta:
+        model = Article
+        fields = ['title', 'body', 'image']
 
 class ArticleView(RedirectView):
     url = reverse_lazy("article_list")
@@ -58,11 +73,35 @@ class ArticleDetailView(DetailView):
 class ArticleCreateView(LoginRequiredMixin, CreateView):
     template_name = "article_add.html"
     model = Article
-    fields = ['title', 'body', 'image']  # Exclude 'investigator' from the form
+    fields = ['title', 'body', 'image']
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            data['photo_formset'] = PhotoFormSet(self.request.POST, self.request.FILES)
+        else:
+            data['photo_formset'] = PhotoFormSet()
+        return data
 
     def form_valid(self, form):
-        form.instance.investigator = self.request.user.investigator
-        return super().form_valid(form)
+        context = self.get_context_data()
+        photo_formset = context['photo_formset']
+        form.instance.investigator = self.request.user.investigator  # Associate the article with the investigator
+
+        if photo_formset.is_valid():
+            self.object = form.save()  # Save the article
+            photo_formset.instance = self.object  # Associate photos with the article
+
+            # Assign the uploader to each photo in the formset
+            photos = photo_formset.save(commit=False)
+            for photo in photos:
+                photo.uploaded_by = self.request.user  # Assign the uploader
+                photo.save()  # Save each photo
+            return super().form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+
 
 class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "article_edit.html"
