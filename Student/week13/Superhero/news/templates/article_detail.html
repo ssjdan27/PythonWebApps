@@ -11,30 +11,30 @@
         <div class="card-body">
             <h6 class="card-subtitle mb-2 text-muted">By <a href="/investigator/{{ article.investigator.pk }}">{{ article.investigator.user.username }}</a></h6>
             <div class="card-text">
-                {{ markdown_content.body|safe }}
+                {{ markdown_content|safe }}
             </div>
             {% if carousel %}
-        <div id="carouselExampleIndicators" class="carousel slide mt-4" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                {% for item in carousel %}
-                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                        <img src="{{ item.image_url }}" class="d-block w-100" alt="{{ item.article_title }}">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>{{ item.article_title }}</h5>
-                        </div>
+                <div id="carouselExampleIndicators" class="carousel slide mt-4" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for item in carousel %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <img src="{{ item.image_url }}" class="d-block w-100" alt="{{ item.article_title }}">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>{{ item.article_title }}</h5>
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    {% endif %}
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            {% endif %}
             <a href="/article/" class="btn btn-secondary m-2">Article List</a>
             {% if article.investigator.user == request.user %}
                 <a href="/article/{{ article.pk }}/" class="btn btn-secondary m-2">Edit Article</a>
