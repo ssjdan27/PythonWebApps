@@ -44,15 +44,18 @@ class Article (models.Model):
 
 def get_upload(instance, filename):
     return f'images/{filename}'
-    
+
 class Photo(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='photos')  # Ensure this line is present
     title = models.CharField(max_length=100)
     image = models.ImageField(null=True, blank=True, upload_to=get_upload)
     uploaded_by = models.ForeignKey(
         'auth.User', on_delete=models.CASCADE, related_name='photos'
     )
     created_at = models.DateTimeField(auto_now_add=True)
+    article = models.ForeignKey(
+        Article, on_delete=models.CASCADE, related_name='photos', null=True, blank=True
+    )
+
 
 class Superhero(models.Model):
     name = models.CharField(max_length=200)

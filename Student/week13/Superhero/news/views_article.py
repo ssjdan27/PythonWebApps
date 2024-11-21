@@ -36,21 +36,24 @@ class ArticleDetailView(DetailView):
         md = markdown.Markdown(extensions=["fenced_code"])
         markdown_content = self.object
         markdown_content.body = md.convert(markdown_content.body)
-        context["markdown_content"] = markdown_content
+        context["markdown_content"] = markdown_content.body
 
-        # Add carousel data
+        # Fetch photos related to the article
         photos = Photo.objects.filter(article=self.object)
+        print(f"Debug: Photos for article {self.object.pk}: {photos}")  # Debug statement
         context['carousel'] = self.carousel_data(photos)
         return context
 
     def carousel_data(self, photos):
-        return [
-            {
-                'image_url': photo.image.url,
-                'article_title': photo.article.title,
-            }
-            for photo in photos
-        ]
+        data = []
+        for photo in photos:
+            if photo.image:  # Ensure the photo has an image file
+                print(f"Debug: Photo image URL = {photo.image.url}")  # Debug statement
+                data.append({
+                    'image_url': photo.image.url,
+                    'article_title': self.object.title,
+                })
+        return data
 
 class ArticleCreateView(LoginRequiredMixin, CreateView):
     template_name = "article_add.html"
