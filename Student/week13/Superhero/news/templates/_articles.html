@@ -1,0 +1,9 @@
+<div class="articles-list">
+    {% for article in articles %}
+    <div class="article-item">
+        <h2><a href="/article/{{ article.pk }}">{{ article.title }}</a></h2>
+        <p>{{ article.body }}</p>
+        <p>Owner: <a href="/developer/{{ article.owner.pk }}">{{ article.owner.pk }}</a></p>
+    </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "name": "Garfield",
+        "identity": "Garfield",
+        "description": "is garf",
+        "strength": "Cat",
+        "weakness": "Lazy",
+        "image": "garfield.jpg",
+        "investigator_id": 1
+    }
+]
