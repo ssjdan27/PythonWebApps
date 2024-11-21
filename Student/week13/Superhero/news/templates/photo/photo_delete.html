@@ -1,0 +1,15 @@
+{% extends 'theme.html' %}
+
+{% block title %}
+Delete Photo
+{% endblock title %}
+
+{% block content %}
+
+<form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete the photo "{{ object.title }}"?</p>
+    <img src="{{ object.image.url }}" alt="{{ object.title }}" style="max-width: 100%; height: auto;">
+    <input type="submit" value="Confirm">
+</form>
+
+{% endblock content %}

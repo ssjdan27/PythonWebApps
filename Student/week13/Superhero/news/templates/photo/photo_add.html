@@ -1,7 +1,7 @@
 {% extends 'theme.html' %}
 
 {% block title %}
-Add New Article
+Upload Photo
 {% endblock title %}
 
 {% block content %}
@@ -9,6 +9,6 @@ Add New Article
 <form action="" method="post" enctype="multipart/form-data">  <!-- Add enctype attribute -->
     {% csrf_token %}
     {{ form|crispy }}
-    <button class="btn btn-primary mt-5" type="submit">Save Record</button>
+    <button class="btn btn-primary mt-5" type="submit">Upload Photo</button>
 </form>
 {% endblock content %}

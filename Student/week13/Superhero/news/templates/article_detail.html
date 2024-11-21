@@ -4,24 +4,49 @@
 
 <div class="container m-5">
     <header class="text-center">
-        <h1>{{ object.title }}</h1>
+        <h1>{{ article.title }}</h1>
     </header>
 
     <div class="card">
         <div class="card-body">
-
-            <h6 class="card-subtitle mb-2 text-muted">By <a href="/investigator/{{ object.investigator.pk }}">{{ object.investigator.user.username }}</a></h6>
+            <h6 class="card-subtitle mb-2 text-muted">By <a href="/investigator/{{ article.investigator.pk }}">{{ article.investigator.user.username }}</a></h6>
             <div class="card-text">
-                {{ markdown_content.content|safe }}
+                {{ markdown_content.body|safe }}
             </div>
+            {% if article.image %}
+                <div class="text-center mt-4">
+                    <img src="{{ article.image.url }}" alt="{{ article.title }}" class="img-fluid">
+                </div>
+            {% endif %}
+            {% if carousel %}
+                <div id="carouselExampleIndicators" class="carousel slide mt-4" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for item in carousel %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <img src="{{ item.image_url }}" class="d-block w-100" alt="{{ item.article_title }}">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>{{ item.article_title }}</h5>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            {% endif %}
             <a href="/article/" class="btn btn-secondary m-2">Article List</a>
-            {% if object.investigator.user == request.user %}
-                <a href="/article/{{ object.pk }}/" class="btn btn-secondary m-2">Edit Article</a>
-                <a href="/article/{{ object.pk }}/delete" class="btn btn-secondary m-2">Delete Article</a>
+            {% if article.investigator.user == request.user %}
+                <a href="/article/{{ article.pk }}/" class="btn btn-secondary m-2">Edit Article</a>
+                <a href="/article/{{ article.pk }}/delete" class="btn btn-secondary m-2">Delete Article</a>
             {% endif %}
         </div>
     </div>
-
 </div>
 
 {% endblock content %}

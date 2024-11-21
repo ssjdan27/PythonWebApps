@@ -33,12 +33,26 @@ class Article (models.Model):
     investigator = models.ForeignKey(Investigator, on_delete=models.CASCADE, editable=False)
     title = models.CharField(max_length=100)
     body = models.TextField()
+    image = models.ImageField(upload_to='articles/', blank=True, null=True)
+
 
     def __str__(self):
         return f'{self.title}'
 
     def get_absolute_url(self):
         return reverse_lazy('article_detail', args=[str(self.id)])
+
+def get_upload(instance, filename):
+    return f'images/{filename}'
+    
+class Photo(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='photos')  # Ensure this line is present
+    title = models.CharField(max_length=100)
+    image = models.ImageField(null=True, blank=True, upload_to=get_upload)
+    uploaded_by = models.ForeignKey(
+        'auth.User', on_delete=models.CASCADE, related_name='photos'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
 
 class Superhero(models.Model):
     name = models.CharField(max_length=200)
@@ -48,6 +62,10 @@ class Superhero(models.Model):
     weakness = models.CharField(max_length=100, default='')
     image = models.CharField(max_length=100, default='')
     investigator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='superheroes')
+    photos = models.ManyToManyField(Photo, blank=True, related_name='superheroes')
+
+    def add_photo(self, photo):
+        self.photos.add(photo)
     
     def __str__(self):
         return self.name
