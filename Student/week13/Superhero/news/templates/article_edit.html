@@ -10,6 +10,20 @@
         {% csrf_token %}
         {{ form|crispy }}
 
+        <h3>Upload Photos</h3>
+        {{ photo_formset.management_form }}
+        <div class="row">
+            {% for form in photo_formset %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            {{ form|crispy }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
         <button class="btn btn-primary mt-5" type="submit">Save Record</button>
     </form>
 

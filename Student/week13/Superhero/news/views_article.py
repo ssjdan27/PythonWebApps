@@ -1,6 +1,6 @@
 import markdown
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django import forms
 from django.forms.models import inlineformset_factory
@@ -30,7 +30,7 @@ PhotoFormSet = inlineformset_factory(
 class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
-        fields = ['title', 'body', 'image']
+        fields = ['title', 'body']
 
 class ArticleView(RedirectView):
     url = reverse_lazy("article_list")
@@ -73,7 +73,7 @@ class ArticleDetailView(DetailView):
 class ArticleCreateView(LoginRequiredMixin, CreateView):
     template_name = "article_add.html"
     model = Article
-    fields = ['title', 'body', 'image']
+    fields = ['title', 'body']
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
@@ -106,7 +106,26 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
 class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "article_edit.html"
     model = Article
-    fields = ['title', 'body', 'image']  # Exclude 'investigator' from the form
+    form_class = ArticleForm
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            data['photo_formset'] = PhotoFormSet(self.request.POST, self.request.FILES, instance=self.object)
+        else:
+            data['photo_formset'] = PhotoFormSet(instance=self.object)
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        photo_formset = context['photo_formset']
+        if photo_formset.is_valid():
+            self.object = form.save()
+            photo_formset.instance = self.object
+            photo_formset.save()
+            return redirect(self.get_success_url())
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
 
 class ArticleDeleteView(LoginRequiredMixin, DeleteView):
     model = Article
