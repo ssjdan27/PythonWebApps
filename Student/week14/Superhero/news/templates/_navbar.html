@@ -5,6 +5,10 @@
     <a class="nav-link text-light" href="{% url 'article_list' %}">News Articles</a>
 </li>
 
+<li class="nav-item">
+    <a class="nav-link text-light" href="{% url 'message_list' %}">Message Board</a>
+</li>
+
 {% if user.is_authenticated %}
 <li class="nav-item">
     <a class="nav-link text-light" href="{% url 'article_add' %}">Add Article</a>

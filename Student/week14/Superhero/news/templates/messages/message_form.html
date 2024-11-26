@@ -1,0 +1,13 @@
+{% extends 'theme.html' %}
+
+{% block content %}
+<h1>{% if object %}Edit Message{% else %}Create New Message{% endif %}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
+
+<a href="{% url 'message_list' %}" class="btn btn-secondary">Cancel</a>
+{% endblock %}

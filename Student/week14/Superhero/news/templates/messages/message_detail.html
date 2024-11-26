@@ -1,0 +1,14 @@
+{% extends 'theme.html' %}
+
+{% block content %}
+<h1>{{ message.title }}</h1>
+<p>{{ message.text }}</p>
+<small>By {{ message.created_by.username }} on {{ message.created_at }}</small>
+
+<a href="{% url 'message_list' %}">Back to List</a>
+
+{% if message.created_by == user %}
+    <a href="{% url 'message_edit' message.pk %}" class="btn btn-warning">Edit</a>
+    <a href="{% url 'message_delete' message.pk %}" class="btn btn-danger">Delete</a>
+{% endif %}
+{% endblock %}
