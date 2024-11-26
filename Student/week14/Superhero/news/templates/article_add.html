@@ -1,0 +1,25 @@
+{% extends 'theme.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Add New Article
+{% endblock title %}
+
+{% block content %}
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+
+    <h3>Upload Photos</h3>
+    {{ photo_formset.management_form }}
+    <div class="row">
+        {% for form in photo_formset %}
+            <div class="col-md-4">
+                {{ form|crispy }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <button class="btn btn-primary mt-4" type="submit">Save</button>
+</form>
+{% endblock content %}

@@ -1,0 +1,16 @@
+<table class="table table-hover">
+    <tr>
+        <th>Investigator</th>
+        <th>Description</th>
+        <th>Owner</th>
+    </tr>
+
+    {% for investigator in investigators %}
+    <tr>
+        <td><a href="/investigator/{{ investigator.pk }}">{{ investigator.title }}</a></td>
+        <td>{{ investigator.body }}</td>
+        <td><a href="/developer/{{ investigator.owner.pk }}">{{ investigator.owner.pk }}</a></td>
+    </tr>
+    {% endfor %}
+
+</table>
